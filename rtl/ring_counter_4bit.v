@@ -1,0 +1,16 @@
+`timescale 1ns/1ps
+
+// 4-bit ring counter. Reset seeds a single '1'; the bit rotates each clock.
+module ring_counter_4bit (
+    input  wire      clk,
+    input  wire      rst_n,
+    input  wire      en,
+    output reg [3:0] q
+);
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n)
+            q <= 4'b0001;
+        else if (en)
+            q <= {q[2:0], q[3]};
+    end
+endmodule
